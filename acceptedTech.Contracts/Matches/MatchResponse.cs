@@ -1,12 +1,10 @@
-﻿using acceptedTech.Domain.Enums;
-
-namespace acceptedTech.Contracts.Matches
+﻿namespace acceptedTech.Contracts.Matches
 {
     public record MatchResponse(
         int Id,
         string Description,
-        string MatchDate,
-        string MatchTime,
+        DateOnly MatchDate,
+        TimeOnly MatchTime,
         string TeamA,
         string TeamB,
         SportType Sport);
