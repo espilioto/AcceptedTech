@@ -10,4 +10,11 @@
     <ProjectReference Include="..\acceptedTech.Domain\acceptedTech.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Matches\Queries\" />
+    <Folder Include="Matches\Commands\" />
+    <Folder Include="MatchOdds\Queries\" />
+    <Folder Include="MatchOdds\Commands\" />
+  </ItemGroup>
+
 </Project>
