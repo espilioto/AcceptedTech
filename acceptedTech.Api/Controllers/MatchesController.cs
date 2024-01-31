@@ -1,4 +1,6 @@
-﻿using acceptedTech.Contracts.Matches;
+﻿using acceptedTech.Application.Matches.Commands.CreateMatch;
+using acceptedTech.Contracts.Matches;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace acceptedTech.Api.Controllers
@@ -7,6 +9,13 @@ namespace acceptedTech.Api.Controllers
     [ApiController]
     public class MatchesController : ControllerBase
     {
+        private readonly ISender _mediator;
+
+        public MatchesController(ISender mediator)
+        {
+            _mediator = mediator;
+        }
+
         #region Get
         [HttpGet]
         [Route("matches")]
@@ -36,9 +45,28 @@ namespace acceptedTech.Api.Controllers
         #region Post
         [HttpPost]
         [Route("createMatch")]
-        public IActionResult CreateMatch(CreateMatchRequest request)
+        public async Task<IActionResult> CreateMatch(CreateMatchRequest request)
         {
-            return Ok(request);
+            var command = new CreateMatchCommand(
+                request.Description,
+                request.MatchDate,
+                request.MatchTime,
+                request.TeamA,
+                request.TeamB,
+                (int)request.Sport);
+
+            var matchId = await _mediator.Send(command);
+
+            var response = new MatchResponse(
+                matchId,
+                request.Description,
+                request.MatchDate,
+                request.MatchTime,
+                request.TeamA,
+                request.TeamB,
+                request.Sport);
+
+            return Created("22", response);
         }
         #endregion
 
