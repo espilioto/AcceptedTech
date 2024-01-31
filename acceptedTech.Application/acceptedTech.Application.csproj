@@ -12,9 +12,13 @@
 
   <ItemGroup>
     <Folder Include="Matches\Queries\" />
-    <Folder Include="Matches\Commands\" />
     <Folder Include="MatchOdds\Queries\" />
     <Folder Include="MatchOdds\Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
 </Project>
