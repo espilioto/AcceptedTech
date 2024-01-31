@@ -1,12 +1,10 @@
-﻿using acceptedTech.Domain;
-
-namespace acceptedTech.Application.Common.Interfaces
+﻿namespace acceptedTech.Application.Common.Interfaces
 {
     public interface IMatchOddsRepository
     {
-        Task AddAsync(MatchOdds matchOdds, CancellationToken cancellationToken);
-        Task<MatchOdds?> GetByIdAsync(int matchOddsId, CancellationToken cancellationToken);
-        Task RemoveAsync(MatchOdds matchOdds, CancellationToken cancellationToken);
-        Task UpdateAsync(MatchOdds matchOdds, CancellationToken cancellationToken);
+        Task<Domain.MatchOdds> AddAsync(Domain.MatchOdds matchOdds, CancellationToken cancellationToken);
+        Task<Domain.MatchOdds?> GetByIdAsync(int matchOddsId, CancellationToken cancellationToken);
+        Task RemoveAsync(Domain.MatchOdds matchOdds, CancellationToken cancellationToken);
+        Task UpdateAsync(Domain.MatchOdds matchOdds, CancellationToken cancellationToken);
     }
 }

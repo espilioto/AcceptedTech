@@ -1,4 +1,5 @@
-﻿using acceptedTech.Domain.Enums;
+﻿using acceptedTech.Domain;
+using ErrorOr;
 using MediatR;
 
 namespace acceptedTech.Application.Matches.Commands.CreateMatch
@@ -9,5 +10,5 @@ namespace acceptedTech.Application.Matches.Commands.CreateMatch
             TimeOnly MatchTime,
             string TeamA,
             string TeamB,
-            int Sport) : IRequest<int>;
+            int Sport) : IRequest<ErrorOr<Match>>;
 }

@@ -55,18 +55,19 @@ namespace acceptedTech.Api.Controllers
                 request.TeamB,
                 (int)request.Sport);
 
-            var matchId = await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-            var response = new MatchResponse(
-                matchId,
-                request.Description,
-                request.MatchDate,
-                request.MatchTime,
-                request.TeamA,
-                request.TeamB,
-                request.Sport);
-
-            return Created("22", response);
+            return result.MatchFirst(
+                matchId => Created(string.Empty, new MatchResponse(
+                                                    result.Value.Id,
+                                                    request.Description,
+                                                    request.MatchDate,
+                                                    request.MatchTime,
+                                                    request.TeamA,
+                                                    request.TeamB,
+                                                    request.Sport)),
+                error => Problem()
+                );
         }
         #endregion
 
