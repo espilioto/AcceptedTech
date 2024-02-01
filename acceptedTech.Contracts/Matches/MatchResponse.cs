@@ -7,5 +7,6 @@
         TimeOnly MatchTime,
         string TeamA,
         string TeamB,
-        SportType Sport);
+        SportType Sport,
+        List<Domain.MatchOdds>? Odds);
 }

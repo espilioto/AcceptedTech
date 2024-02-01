@@ -35,7 +35,8 @@ namespace acceptedTech.Api.Controllers
                     MatchTime: x.MatchTime,
                     TeamA: x.TeamA,
                     TeamB: x.TeamB,
-                    Sport: x.Sport.ToContractSportType()))),
+                    Sport: x.Sport.ToContractSportType(),
+                    null))),
                 Problem);
         }
 
@@ -56,7 +57,8 @@ namespace acceptedTech.Api.Controllers
                     result.Value.MatchTime,
                     result.Value.TeamA,
                     result.Value.TeamB,
-                    result.Value.Sport.ToContractSportType())),
+                    result.Value.Sport.ToContractSportType(),
+                    null)),
                 Problem);
         }
 
@@ -64,17 +66,21 @@ namespace acceptedTech.Api.Controllers
         [Route("{matchid:int}/odds")]
         public async Task<IActionResult> GetMatchOddsForMatch(int matchid)
         {
-            var command = new GetMatchOddsForMatchQuery(matchid);
+            var command = new GetMatchWithOddsForMatchQuery(matchid);
 
             var result = await _mediator.Send(command);
 
             //TODO automapper
             return result.Match(
-                match => Ok(match.Select(x => new MatchOddsResponse(
-                    Id: x.Id,
-                    MatchId: x.MatchId,
-                    Specifier: x.Specifier,
-                    Odd: x.Odd))),
+                match => Ok(new MatchResponse(
+                    result.Value.Id,
+                    result.Value.Description,
+                    result.Value.MatchDate,
+                    result.Value.MatchTime,
+                    result.Value.TeamA,
+                    result.Value.TeamB,
+                    result.Value.Sport.ToContractSportType(),
+                    result.Value.MatchOdds)),
                 Problem);
         }
 
@@ -105,7 +111,8 @@ namespace acceptedTech.Api.Controllers
                                                     request.MatchTime,
                                                     request.TeamA,
                                                     request.TeamB,
-                                                    request.Sport)),
+                                                    request.Sport,
+                                                    null)),
                 Problem);
         }
 

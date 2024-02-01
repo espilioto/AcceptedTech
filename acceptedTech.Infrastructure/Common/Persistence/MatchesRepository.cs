@@ -15,9 +15,16 @@ namespace acceptedTech.Infrastructure.Common.Persistence
             return result.Entity;
         }
 
-        public async Task<Match?> GetByIdAsync(int matchId, CancellationToken cancellationToken)
+        public async Task<Match?> GetByIdAsync(int matchId, CancellationToken cancellationToken, bool includeOdds = false)
         {
-            return await _context.Matches.FirstOrDefaultAsync(x => x.Id == matchId, cancellationToken);
+            var query = _context.Matches.AsQueryable();
+
+            if(includeOdds)
+            {
+                query = query.Include(x => x.MatchOdds);
+            }
+
+            return await query.FirstOrDefaultAsync(x => x.Id == matchId, cancellationToken);
         }
 
         public async Task<List<Match>> GetAllAsync(CancellationToken cancellationToken)
