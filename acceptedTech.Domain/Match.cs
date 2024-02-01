@@ -11,5 +11,7 @@ namespace acceptedTech.Domain
         public required string TeamA { get; set; }
         public required string TeamB { get; set; }
         public required SportType Sport { get; set; }
+
+        public virtual List<MatchOdds> MatchOdds { get; set; } = [];
     }
 }
