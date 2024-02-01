@@ -88,7 +88,7 @@ namespace acceptedTech.Api.Controllers
 
         #region Put
         [HttpPut]
-        [Route("update/{matchoddsid:int}")]
+        [Route("{matchoddsid:int}/update")]
         public async Task<IActionResult> UpdateMatchOdds(UpdateMatchOddsRequest request, int matchoddsid)
         {
             //TODO automapper
@@ -108,7 +108,7 @@ namespace acceptedTech.Api.Controllers
 
         #region Delete
         [HttpDelete]
-        [Route("delete/{matchoddsid:int}")]
+        [Route("{matchoddsid:int}/delete")]
         public async Task<IActionResult> DeleteMatchOdds(int matchoddsid)
         {
             var command = new DeleteMatchOddsCommand(matchoddsid);
