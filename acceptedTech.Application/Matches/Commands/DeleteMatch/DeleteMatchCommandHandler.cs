@@ -14,9 +14,9 @@ namespace acceptedTech.Application.Matches.Commands.DeleteMatch
 
         public async Task<ErrorOr<Deleted>> Handle(DeleteMatchCommand request, CancellationToken cancellationToken)
         {
-            var match = await _matchesRepository.GetByIdAsync(request.Id, cancellationToken);
+            var match = await _matchesRepository.GetByIdAsync(request.MatchId, cancellationToken);
 
-            if (match == null)
+            if (match is null)
             {
                 return Error.NotFound(description: "Match not found");
             }

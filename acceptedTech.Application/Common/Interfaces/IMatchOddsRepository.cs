@@ -2,9 +2,11 @@
 {
     public interface IMatchOddsRepository
     {
-        Task<Domain.MatchOdds> AddAsync(Domain.MatchOdds matchOdds, CancellationToken cancellationToken);
-        Task<Domain.MatchOdds?> GetByIdAsync(int matchOddsId, CancellationToken cancellationToken);
-        Task RemoveAsync(Domain.MatchOdds matchOdds, CancellationToken cancellationToken);
-        Task UpdateAsync(Domain.MatchOdds matchOdds, CancellationToken cancellationToken);
+        Task<Domain.MatchOdds> AddAsync(Domain.MatchOdds match, CancellationToken cancellationToken);
+        Task<Domain.MatchOdds?> GetByIdAsync(int matchId, CancellationToken cancellationToken);
+        Task<List<Domain.MatchOdds>> GetAllAsync(CancellationToken cancellationToken);
+        Task RemoveAsync(Domain.MatchOdds match);
+        Task UpdateAsync(Domain.MatchOdds match);
+
     }
 }

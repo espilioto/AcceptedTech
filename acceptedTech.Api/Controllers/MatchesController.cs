@@ -61,7 +61,7 @@ namespace acceptedTech.Api.Controllers
 
         #region Post
         [HttpPost]
-        [Route("creatematch")]
+        [Route("create")]
         public async Task<IActionResult> CreateMatch(CreateMatchRequest request)
         {
             //TODO automapper
@@ -92,12 +92,12 @@ namespace acceptedTech.Api.Controllers
 
         #region Put
         [HttpPut]
-        [Route("updatematch")]
-        public async Task<IActionResult> UpdateMatch(UpdateMatchRequest request)
+        [Route("update/{matchid:int}")]
+        public async Task<IActionResult> UpdateMatch(UpdateMatchRequest request, int matchid)
         {
             //TODO automapper
             var command = new UpdateMatchCommand(
-                    request.Id,
+                    matchid,
                     request.Description,
                     request.MatchDate,
                     request.MatchTime,

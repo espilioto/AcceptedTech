@@ -1,7 +1,6 @@
 ﻿namespace acceptedTech.Contracts.Matches
 {
     public record UpdateMatchRequest(
-        int Id,
         string Description,
         DateOnly MatchDate,
         TimeOnly MatchTime,

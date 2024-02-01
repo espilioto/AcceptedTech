@@ -3,5 +3,5 @@ using MediatR;
 
 namespace acceptedTech.Application.Matches.Commands.DeleteMatch
 {
-    public record DeleteMatchCommand(int Id) : IRequest<ErrorOr<Deleted>>;
+    public record DeleteMatchCommand(int MatchId) : IRequest<ErrorOr<Deleted>>;
 }

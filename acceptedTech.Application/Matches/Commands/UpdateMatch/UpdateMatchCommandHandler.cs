@@ -17,7 +17,7 @@ namespace acceptedTech.Application.Matches.Commands.UpdateMatch
         {
             var match = await _matchesRepository.GetByIdAsync(request.Id, cancellationToken);
 
-            if (match == null)
+            if (match is null)
             {
                 return Error.NotFound(description: "Match not found");
             }

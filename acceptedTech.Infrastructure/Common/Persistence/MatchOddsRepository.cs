@@ -4,21 +4,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace acceptedTech.Infrastructure.Common.Persistence
 {
-    public class MatchOddsRepository : IMatchOddsRepository
+    public class MatchOddsRepository(AppDbContext appDbContext) : IMatchOddsRepository
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _context = appDbContext;
 
-        public MatchOddsRepository(AppDbContext context)
+        public async Task<MatchOdds> AddAsync(MatchOdds match, CancellationToken cancellationToken)
         {
-            _context = context;
+            var result = await _context.MatchOdds.AddAsync(match, cancellationToken);
+
+            return result.Entity;
         }
 
-        public async Task<MatchOdds> AddAsync(MatchOdds matchOdds, CancellationToken cancellationToken)
+        public async Task<MatchOdds?> GetByIdAsync(int matchId, CancellationToken cancellationToken)
         {
-            await _context.MatchOdds.AddAsync(matchOdds, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
+            return await _context.MatchOdds.FirstOrDefaultAsync(x => x.Id == matchId, cancellationToken);
+        }
 
-            return matchOdds;
+        public async Task<List<MatchOdds>> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return await _context.MatchOdds.ToListAsync(cancellationToken);
         }
 
         public async Task<MatchOdds?> GetByIdAsync(int matchOddsId, CancellationToken cancellationToken)
@@ -26,14 +30,18 @@ namespace acceptedTech.Infrastructure.Common.Persistence
             return await _context.MatchOdds.FirstOrDefaultAsync(x => x.Id == matchOddsId, cancellationToken);
         }
 
-        public Task RemoveAsync(MatchOdds matchOdds, CancellationToken cancellationToken)
+        public Task RemoveAsync(MatchOdds match)
         {
-            throw new NotImplementedException();
+            _context.Remove(match);
+
+            return Task.CompletedTask;
         }
 
-        public Task UpdateAsync(MatchOdds matchOdds, CancellationToken cancellationToken)
+        public Task UpdateAsync(MatchOdds match)
         {
-            throw new NotImplementedException();
+            _context.Update(match);
+
+            return Task.CompletedTask;
         }
     }
 }
