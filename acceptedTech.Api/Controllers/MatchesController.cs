@@ -1,5 +1,7 @@
-﻿using acceptedTech.Application.Matches.Commands.CreateMatch;
+﻿using acceptedTech.Api.Controllers.Common;
+using acceptedTech.Application.Matches.Commands.CreateMatch;
 using acceptedTech.Contracts.Matches;
+using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +9,7 @@ namespace acceptedTech.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MatchesController : ControllerBase
+    public class MatchesController : ApiController
     {
         private readonly ISender _mediator;
 
@@ -57,7 +59,7 @@ namespace acceptedTech.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            return result.MatchFirst(
+            return result.Match(
                 matchId => Created(string.Empty, new MatchResponse(
                                                     result.Value.Id,
                                                     request.Description,
@@ -66,9 +68,9 @@ namespace acceptedTech.Api.Controllers
                                                     request.TeamA,
                                                     request.TeamB,
                                                     request.Sport)),
-                error => Problem()
-                );
+                errors => Problem(errors));
         }
+
         #endregion
 
         #region Put
@@ -76,5 +78,6 @@ namespace acceptedTech.Api.Controllers
 
         #region Delete
         #endregion
+
     }
 }

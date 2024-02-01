@@ -13,10 +13,10 @@
   <ItemGroup>
     <Folder Include="Matches\Queries\" />
     <Folder Include="MatchOdds\Queries\" />
-    <Folder Include="MatchOdds\Commands\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ErrorOr" Version="1.9.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
   </ItemGroup>
