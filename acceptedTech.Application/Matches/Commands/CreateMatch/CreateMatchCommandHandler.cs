@@ -1,6 +1,5 @@
 ﻿using acceptedTech.Application.Common.Interfaces;
 using acceptedTech.Domain;
-using acceptedTech.Domain.Enums;
 using ErrorOr;
 using MediatR;
 
@@ -27,7 +26,7 @@ namespace acceptedTech.Application.Matches.Commands.CreateMatch
             };
 
             var result = await _matchesRepository.AddAsync(match, cancellationToken);
-            await _unitOfWork.CommitChangesAsync();
+            await _unitOfWork.CommitChangesAsync(cancellationToken);
 
             return result;
         }

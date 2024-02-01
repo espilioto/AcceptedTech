@@ -2,7 +2,7 @@
 using ErrorOr;
 using MediatR;
 
-namespace acceptedTech.Application.Matches.Commands.CreateMatch
+namespace acceptedTech.Application.Matches.Queries.CreateMatch
 {
-    public record GetMatchQuery(int Id) : IRequest<ErrorOr<Match>>;
+    public record GetMatchQuery(int MatchId) : IRequest<ErrorOr<Match>>;
 }

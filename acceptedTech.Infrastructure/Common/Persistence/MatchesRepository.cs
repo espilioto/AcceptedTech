@@ -20,14 +20,23 @@ namespace acceptedTech.Infrastructure.Common.Persistence
             return await _context.Matches.FirstOrDefaultAsync(x => x.Id == matchId, cancellationToken);
         }
 
-        public Task RemoveAsync(Match match, CancellationToken cancellationToken)
+        public async Task<List<Match>> GetAllAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _context.Matches.ToListAsync(cancellationToken);
         }
 
-        public Task UpdateAsync(Match match, CancellationToken cancellationToken)
+        public Task RemoveAsync(Match match)
         {
-            throw new NotImplementedException();
+            _context.Remove(match);
+
+            return Task.CompletedTask;
+        }
+
+        public Task UpdateAsync(Match match)
+        {
+            _context.Update(match);
+
+            return Task.CompletedTask;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace acceptedTech.Application.MatchOdds.Commands.CreateMatchOdds
             };
 
             var result = await _matchOddsRepository.AddAsync(matchOdds, cancellationToken);
-            await _unitOfWork.CommitChangesAsync();
+            await _unitOfWork.CommitChangesAsync(cancellationToken);
 
             return result;
         }
