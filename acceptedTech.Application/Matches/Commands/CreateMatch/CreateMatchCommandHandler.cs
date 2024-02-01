@@ -6,16 +6,13 @@ using MediatR;
 
 namespace acceptedTech.Application.Matches.Commands.CreateMatch
 {
-    public class CreateMatchCommandHandler : IRequestHandler<CreateMatchCommand, ErrorOr<Match>>
+    public class CreateMatchCommandHandler(
+        IMatchesRepository matchesRepository,
+        IUnitOfWork unitOfWork)
+            : IRequestHandler<CreateMatchCommand, ErrorOr<Match>>
     {
-        private readonly IMatchesRepository _matchesRepository;
-        private readonly IUnitOfWork _unitOfWork;
-
-        public CreateMatchCommandHandler(IMatchesRepository matchesRepository, IUnitOfWork unitOfWork)
-        {
-            _matchesRepository = matchesRepository;
-            _unitOfWork = unitOfWork;
-        }
+        private readonly IMatchesRepository _matchesRepository = matchesRepository;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task<ErrorOr<Match>> Handle(CreateMatchCommand request, CancellationToken cancellationToken)
         {
@@ -26,9 +23,9 @@ namespace acceptedTech.Application.Matches.Commands.CreateMatch
                 MatchTime = request.MatchTime,
                 TeamA = request.TeamA,
                 TeamB = request.TeamB,
-                Sport = (SportType)request.Sport
+                Sport = request.Sport
             };
-            
+
             var result = await _matchesRepository.AddAsync(match, cancellationToken);
             await _unitOfWork.CommitChangesAsync();
 

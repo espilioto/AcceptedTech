@@ -4,21 +4,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace acceptedTech.Infrastructure.Common.Persistence
 {
-    public class MatchesRepository : IMatchesRepository
+    public class MatchesRepository(AppDbContext context) : IMatchesRepository
     {
-        private readonly AppDbContext _context;
-
-        public MatchesRepository(AppDbContext context)
-        {
-            _context = context;
-        }
+        private readonly AppDbContext _context = context;
 
         public async Task<Match> AddAsync(Match match, CancellationToken cancellationToken)
         {
-            await _context.Matches.AddAsync(match, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
+            var result = await _context.Matches.AddAsync(match, cancellationToken);
 
-            return match;
+            return result.Entity;
         }
 
         public async Task<Match?> GetByIdAsync(int matchId, CancellationToken cancellationToken)
