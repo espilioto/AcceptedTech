@@ -5,7 +5,7 @@ namespace acceptedTech.Domain
 {
     public class Match : Entity
     {
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
         public required DateOnly MatchDate { get; set; }
         public required TimeOnly MatchTime { get; set; }
         public required string TeamA { get; set; }
