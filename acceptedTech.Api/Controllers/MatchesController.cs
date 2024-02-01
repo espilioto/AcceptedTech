@@ -3,8 +3,10 @@ using acceptedTech.Application.Matches.Commands.CreateMatch;
 using acceptedTech.Application.Matches.Commands.DeleteMatch;
 using acceptedTech.Application.Matches.Commands.UpdateMatch;
 using acceptedTech.Application.Matches.Queries.CreateMatch;
+using acceptedTech.Application.MatchOdds.Queries.GetMatchOddsForMatch;
 using acceptedTech.Contracts.Common;
 using acceptedTech.Contracts.Matches;
+using acceptedTech.Contracts.MatchOdds;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,6 +59,25 @@ namespace acceptedTech.Api.Controllers
                     result.Value.Sport.ToContractSportType())),
                 Problem);
         }
+
+        [HttpGet]
+        [Route("{matchid:int}/odds")]
+        public async Task<IActionResult> GetMatchOddsForMatch(int matchid)
+        {
+            var command = new GetMatchOddsForMatchQuery(matchid);
+
+            var result = await _mediator.Send(command);
+
+            //TODO automapper
+            return result.Match(
+                match => Ok(match.Select(x => new MatchOddsResponse(
+                    Id: x.Id,
+                    MatchId: x.MatchId,
+                    Specifier: x.Specifier,
+                    Odd: x.Odd))),
+                Problem);
+        }
+
         #endregion
 
         #region Post

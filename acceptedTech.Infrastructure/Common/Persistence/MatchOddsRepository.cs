@@ -25,9 +25,9 @@ namespace acceptedTech.Infrastructure.Common.Persistence
             return await _context.MatchOdds.ToListAsync(cancellationToken);
         }
 
-        public async Task<MatchOdds?> GetByIdAsync(int matchOddsId, CancellationToken cancellationToken)
+        public async Task<List<MatchOdds>> GetMatchOddsForMatchAsync(int matchId, CancellationToken cancellationToken)
         {
-            return await _context.MatchOdds.FirstOrDefaultAsync(x => x.Id == matchOddsId, cancellationToken);
+            return await _context.MatchOdds.Where(x => x.MatchId == matchId).ToListAsync(cancellationToken);
         }
 
         public Task RemoveAsync(MatchOdds match)
