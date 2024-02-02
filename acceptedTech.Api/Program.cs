@@ -14,9 +14,13 @@ builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 app.UseExceptionHandler();
+
+app.MapHealthChecks("/hc");
 
 using (var scope = app.Services.CreateScope())
 {
