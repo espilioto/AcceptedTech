@@ -19,7 +19,7 @@ namespace acceptedTech.Infrastructure.Common.Persistence
         {
             var query = _context.Matches.AsQueryable();
 
-            if(includeOdds)
+            if (includeOdds)
             {
                 query = query.Include(x => x.MatchOdds);
             }
@@ -30,6 +30,16 @@ namespace acceptedTech.Infrastructure.Common.Persistence
         public async Task<List<Match>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _context.Matches.ToListAsync(cancellationToken);
+        }
+
+        public async Task<bool> MatchExistsAsync(string teamA, string teamB, DateOnly matchDate, TimeOnly matchTime, CancellationToken cancellationToken)
+        {
+            return await _context.Matches
+                .AnyAsync(x =>
+                    x.TeamA == teamA &&
+                    x.TeamB == teamB &&
+                    x.MatchDate == matchDate &&
+                    x.MatchTime == matchTime, cancellationToken);
         }
 
         public Task RemoveAsync(Match match)
