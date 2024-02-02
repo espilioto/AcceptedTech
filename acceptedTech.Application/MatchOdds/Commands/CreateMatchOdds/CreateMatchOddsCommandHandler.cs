@@ -15,11 +15,21 @@ namespace acceptedTech.Application.MatchOdds.Commands.CreateMatchOdds
 
         public async Task<ErrorOr<Domain.MatchOdds>> Handle(CreateMatchOddsCommand request, CancellationToken cancellationToken)
         {
-            var match = await _matchesRepository.GetByIdAsync(request.MatchId, cancellationToken);
+            var match = await _matchesRepository.GetByIdAsync(request.MatchId, cancellationToken, includeOdds: true);
 
             if (match is null)
             {
                 return Error.NotFound(description: "Match not found");
+            }
+
+            if (match.MatchOdds.Count >= 3)
+            {
+                return Error.Validation(description: "Match already has three match odds");
+            }
+
+            if (match.MatchOdds.Any(odds => odds.Specifier == request.Specifier))
+            {
+                return Error.Validation(description: "A match odd with the same specifier already exists for this match");
             }
 
             var matchOdds = new Domain.MatchOdds()
