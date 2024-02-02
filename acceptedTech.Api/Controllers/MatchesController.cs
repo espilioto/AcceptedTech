@@ -26,7 +26,6 @@ namespace acceptedTech.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            //TODO automapper
             return result.Match(
                 match => Ok(match.Select(x => new MatchResponse(
                     Id: x.Id,
@@ -48,7 +47,6 @@ namespace acceptedTech.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            //TODO automapper
             return result.Match(
                 match => Ok(new MatchResponse(
                     result.Value.Id,
@@ -70,7 +68,6 @@ namespace acceptedTech.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            //TODO automapper
             return result.Match(
                 match => Ok(new MatchResponse(
                     result.Value.Id,
@@ -91,7 +88,6 @@ namespace acceptedTech.Api.Controllers
         [Route("create")]
         public async Task<IActionResult> CreateMatch(CreateMatchRequest request)
         {
-            //TODO automapper
             var command = new CreateMatchCommand(
                 request.Description,
                 request.MatchDate,
@@ -102,7 +98,6 @@ namespace acceptedTech.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            //TODO automapper
             return result.Match(
                 matchId => Created(string.Empty, new MatchResponse(
                                                     result.Value.Id,
@@ -123,7 +118,6 @@ namespace acceptedTech.Api.Controllers
         [Route("{matchid:int}/update")]
         public async Task<IActionResult> UpdateMatch(UpdateMatchRequest request, int matchid)
         {
-            //TODO automapper
             var command = new UpdateMatchCommand(
                     matchid,
                     request.Description,

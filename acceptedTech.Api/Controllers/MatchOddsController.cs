@@ -26,7 +26,6 @@ namespace acceptedTech.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            //TODO automapper
             return result.Match(
                 match => Ok(match.Select(x => new MatchOddsResponse(
                     Id: x.Id,
@@ -44,7 +43,6 @@ namespace acceptedTech.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            //TODO automapper
             return result.Match(
                 match => Ok(new MatchOddsResponse(
                     result.Value.Id,
@@ -61,7 +59,6 @@ namespace acceptedTech.Api.Controllers
         [Route("create")]
         public async Task<IActionResult> CreateMatchOdds(CreateMatchOddsRequest request)
         {
-            //TODO automapper
             var command = new CreateMatchOddsCommand(
                 request.MatchId,
                 request.Specifier.ToDomainSpecifierType(),
@@ -69,7 +66,6 @@ namespace acceptedTech.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            //TODO automapper
             return result.Match(
                 matchId => Created(string.Empty, new MatchOddsResponse(
                     result.Value.Id,
@@ -86,7 +82,6 @@ namespace acceptedTech.Api.Controllers
         [Route("{matchoddsid:int}/update")]
         public async Task<IActionResult> UpdateMatchOdds(UpdateMatchOddsRequest request, int matchoddsid)
         {
-            //TODO automapper
             var command = new UpdateMatchOddsCommand(
                     matchoddsid,
                     request.MatchId, 

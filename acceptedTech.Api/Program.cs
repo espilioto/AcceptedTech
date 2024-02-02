@@ -1,16 +1,18 @@
 using acceptedTech.Application;
 using acceptedTech.Infrastructure;
 using acceptedTech.Infrastructure.Common.Persistence;
-using acceptedTech.Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services
-       .AddPresentation()
-       .AddApplication()
-       .AddInfrastructure(builder.Configuration);
+    .AddPresentation()
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
