@@ -1,5 +1,8 @@
 # acceptedTech
 
+Swagger: http://localhost:8080/swagger/index.html
+
+Sample docker-compose:
 ```
 version: '3.7'
 
