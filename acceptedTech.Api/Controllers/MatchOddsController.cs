@@ -1,19 +1,14 @@
 ﻿using acceptedTech.Api.Controllers.Common;
-using acceptedTech.Application.Matches.Commands.CreateMatch;
-using acceptedTech.Application.Matches.Commands.DeleteMatch;
-using acceptedTech.Application.Matches.Commands.UpdateMatch;
 using acceptedTech.Application.MatchOdds.Commands.CreateMatchOdds;
 using acceptedTech.Application.MatchOdds.Commands.DeleteMatchOdds;
 using acceptedTech.Application.MatchOdds.Commands.UpdateMatchOdds;
 using acceptedTech.Application.MatchOdds.Queries.GetMatchOdds;
-using acceptedTech.Application.MatchOdds.Queries.GetMatchOddsForMatch;
 using acceptedTech.Application.MatchOdds.Queries.ListMatchOdds;
 using acceptedTech.Contracts.Common;
-using acceptedTech.Contracts.Matches;
 using acceptedTech.Contracts.MatchOdds;
-using acceptedTech.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Extensions;
 
 namespace acceptedTech.Api.Controllers
 {
@@ -36,7 +31,7 @@ namespace acceptedTech.Api.Controllers
                 match => Ok(match.Select(x => new MatchOddsResponse(
                     Id: x.Id,
                     MatchId: x.MatchId,
-                    Specifier: x.Specifier,
+                    Specifier: x.Specifier.ToContractSpecifierType().GetDescription(),
                     Odd: x.Odd))),
                 Problem);
         }
@@ -54,7 +49,7 @@ namespace acceptedTech.Api.Controllers
                 match => Ok(new MatchOddsResponse(
                     result.Value.Id,
                     result.Value.MatchId,
-                    result.Value.Specifier,
+                    result.Value.Specifier.ToContractSpecifierType().GetDescription(),
                     result.Value.Odd)),
                 Problem);
         }
@@ -69,7 +64,7 @@ namespace acceptedTech.Api.Controllers
             //TODO automapper
             var command = new CreateMatchOddsCommand(
                 request.MatchId,
-                request.Specifier,
+                request.Specifier.ToDomainSpecifierType(),
                 request.Odd);
 
             var result = await _mediator.Send(command);
@@ -79,7 +74,7 @@ namespace acceptedTech.Api.Controllers
                 matchId => Created(string.Empty, new MatchOddsResponse(
                     result.Value.Id,
                     result.Value.MatchId,
-                    result.Value.Specifier,
+                    result.Value.Specifier.ToContractSpecifierType().GetDescription(),
                     result.Value.Odd)),
                 Problem);
         }
@@ -95,7 +90,7 @@ namespace acceptedTech.Api.Controllers
             var command = new UpdateMatchOddsCommand(
                     matchoddsid,
                     request.MatchId, 
-                    request.Specifier,
+                    request.Specifier.ToDomainSpecifierType(),
                     request.Odd);
 
             var result = await _mediator.Send(command);

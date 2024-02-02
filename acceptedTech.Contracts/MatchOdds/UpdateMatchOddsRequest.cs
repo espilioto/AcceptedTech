@@ -2,6 +2,6 @@
 {
     public record UpdateMatchOddsRequest(
         int MatchId,
-        string Specifier,
+        SpecifierType Specifier,
         decimal Odd);
 }

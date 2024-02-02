@@ -1,4 +1,5 @@
-﻿using ErrorOr;
+﻿using acceptedTech.Domain.Enums;
+using ErrorOr;
 using MediatR;
 
 namespace acceptedTech.Application.MatchOdds.Commands.UpdateMatchOdds
@@ -6,6 +7,6 @@ namespace acceptedTech.Application.MatchOdds.Commands.UpdateMatchOdds
     public record UpdateMatchOddsCommand(
         int Id,
         int MatchId,
-        string Specifier,
+        SpecifierType Specifier,
         decimal Odd) : IRequest<ErrorOr<Success>>;
 }
